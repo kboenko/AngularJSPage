@@ -102,7 +102,7 @@
                 { nominal: 1, quantity: 100 },
                 { nominal: 2, quantity: 100 },
                 { nominal: 5, quantity: 100 },
-                { nominal: 10, quantity: 100}
+                { nominal: 10, quantity: 100 }
             ]
         };
         
@@ -125,7 +125,7 @@
                 col = parseInt(col);
                 name = parseInt(name);
                 quant = parseInt(quant);
-                if (!isNaN(name) && !isNaN(quant) && !isNaN(col))
+                if (name != "" && !isNaN(quant) && !isNaN(col))
                     {
                         $scope.productList.items.push({title: name, quantity: col, price: quant, isChosen: false});
                     }
@@ -139,7 +139,7 @@
                 text = parseInt(text);
                 if (!isNaN(text) && !isNaN(col))
                     {
-                        $scope.vmList.items.push({nominat: text, quantity: col});
+                        $scope.vmList.items.push({nominal: text, quantity: col});
                     }
                 }
             });
