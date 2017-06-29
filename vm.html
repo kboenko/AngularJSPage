@@ -11,7 +11,7 @@
     <h1>Vending Machine</h1>
     <table border=1>
         <tr>
-            <td ng-controller = "userWalletCtrl">
+            <td id = "userWallet" ng-controller = "userWalletCtrl">
                 <div><h2 class="header">Customer's wallet</h2></div>
                 <table class="table table-stripped">
                     <thead>
@@ -25,7 +25,7 @@
                         <tr ng-repeat="item in userList.items">
                             <td>{{item.nominal}}</td>
                             <td>{{item.quantity}}</td>
-                            <td><button>Add</button></td>
+                            <td><button ng-click="item.quantity = item.quantity - 1">Add</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -117,6 +117,7 @@
                         $scope.userList.items.push({nominal: text, quantity: col});
                     }
                 }
+                                
             });
             
             purchaseApp.controller("productsCtrl", function ($scope) {
@@ -152,6 +153,12 @@
             alert("You just have paid your order. Thanks a lot!");
             }
         }
+        
+        function addSum() {
+            
+            alert("Yo!");
+        }
+        
     </script>
 </body>
 </html>
