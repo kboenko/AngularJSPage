@@ -1,0 +1,157 @@
+<html ng-app="purchaseApp">
+<head>
+    <title>Vending Machine</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/vmstyle.css">
+    <script src = "js/angular.min.js"></script>
+</head>
+<body>
+    <div ng-app align = "center">
+    <h1>Vending Machine</h1>
+    <table border=1>
+        <tr>
+            <td ng-controller = "userWalletCtrl">
+                <div><h2 class="header">Customer's wallet</h2></div>
+                <table class="table table-stripped">
+                    <thead>
+                        <tr>
+                            <th>Nominal, r.</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in userList.items">
+                            <td>{{item.nominal}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td><button>Add</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td ng-controller = "productsCtrl">
+                <div><h2 class="header">Products</h2></div>
+                <table class="table table-stripped">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price, r.</th>
+                            <th>Quantity</th>
+                            <th>Choose one item</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in productList.items">
+                            <td>{{item.title}}</td>
+                            <td>{{item.price}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td><input type="checkbox" ng-model="item.isChosen" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </td>
+        </tr>
+        <tr>
+            <td ng-controller="vmWalletCtrl">
+                <div><h2 class="header">VM's wallet</h2></div>
+                <table class="table table-stripped">
+                    <thead>
+                        <tr>
+                            <th>Nominal, r.</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in vmList.items">
+                            <td>{{item.nominal}}</td>
+                            <td>{{item.quantity}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td>
+                <div class="btns">Sum: <input type=text id="sum" disabled value=0></div><p>
+                <div class="btns"><button>Get money back</button></div><p>
+                <div class="btns"><button onclick="checkAndPay()">Pay!</button></div>
+            </td>
+        </tr>
+    </table>
+    <script>
+        var userCoins = {
+            items: [
+                { nominal: 1, quantity: 10 },
+                { nominal: 2, quantity: 30 },
+                { nominal: 5, quantity: 20 },
+                { nominal: 10, quantity: 15}
+            ]
+        };
+        
+        var products = {
+            items: [
+                { title: "Tea", quantity: 10, price: 13, isChosen: false },
+                { title: "Coffee", quantity: 20, price: 18, isChosen: false },
+                { title: "Coffe with milk", quantity: 20, price: 21, isChosen: false },
+                { title: "Juice", quantity: 15, price: 35, isChosen: false }
+            ]
+        };
+        
+        var vm = {
+            items: [
+                { nominal: 1, quantity: 100 },
+                { nominal: 2, quantity: 100 },
+                { nominal: 5, quantity: 100 },
+                { nominal: 10, quantity: 100}
+            ]
+        };
+        
+        var purchaseApp = angular.module("purchaseApp", []);
+            purchaseApp.controller("userWalletCtrl", function ($scope) {
+                $scope.userList = userCoins;
+                $scope.addItem = function (text, col) {
+                    col = parseInt(col);
+                    text = parseInt(text)
+                    if(!isNaN(col) && !isNaN(col))
+                    {
+                        $scope.userList.items.push({nominal: text, quantity: col});
+                    }
+                }
+            });
+            
+            purchaseApp.controller("productsCtrl", function ($scope) {
+                $scope.productList = products;
+                $scope.addItem = function(name, quant, col) {
+                col = parseInt(col);
+                name = parseInt(name);
+                quant = parseInt(quant);
+                if (!isNaN(name) && !isNaN(quant) && !isNaN(col))
+                    {
+                        $scope.productList.items.push({title: name, quantity: col, price: quant, isChosen: false});
+                    }
+                }
+            });
+            
+            purchaseApp.controller("vmWalletCtrl", function ($scope) {
+                $scope.vmList = vm;
+                $scope.addItem = function(text, col) {
+                col = parseInt(col);
+                text = parseInt(text);
+                if (!isNaN(text) && !isNaN(col))
+                    {
+                        $scope.vmList.items.push({nominat: text, quantity: col});
+                    }
+                }
+            });
+        
+        function checkAndPay() {
+            if(document.getElementById("sum").value == 0) {
+            alert("You haven't enough money!");
+            }
+            else {
+            alert("You just have paid your order. Thanks a lot!");
+            }
+        }
+    </script>
+</body>
+</html>
